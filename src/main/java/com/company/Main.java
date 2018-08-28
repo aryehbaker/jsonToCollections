@@ -2,6 +2,7 @@ package com.company;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Main {
         URLConnection request = null;
         JsonElement root = null;
         JsonArray rootArray = null;
+        Type reslist = new com.google.gson.reflect.TypeToken<List<Restaurant>>() {}.getType();
         // Connect to the URL using java's native library
         try {url = new URL(sURL);}catch (java.net.MalformedURLException e){System.out.println(e + " URL");}
         try {request = url.openConnection();
@@ -31,8 +33,17 @@ public class Main {
         try {root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
         }catch(java.io.IOException e){System.out.println(e + " from getting info");} //Convert the input stream to a json element
         try{rootArray = root.getAsJsonArray();}catch(java.lang.NullPointerException e){System.out.println(e +" from type of response");} //May be an array, may be an object.
-        Restaurants res =  new Gson().fromJson(rootArray.toString(),Restaurants.class);
+        List<Restaurant> res =  new Gson().fromJson(rootArray.toString(),reslist);
         System.out.println(res.toString());
+        Restaurant r = res.get(0);
+        for(int i = 0; i < res.size();i++)
+        {System.out.println(r.getName());
+        System.out.println(r.getAddress().getBuilding());
+        System.out.println(r.getAddress().getStreet());
+            System.out.println(r.getAddress().getZipcode());
+                    System.out.println(r.getAddress().getCoord());
+        System.out.println(r.getBorough());
+        System.out.println(r.getCuisine());}
 
     }
 }
