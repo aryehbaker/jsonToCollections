@@ -48,11 +48,21 @@ public class Main {
             System.out.println(r.getBorough());
             System.out.println(r.getCuisine());
         }
-        HashMap<Double, Restaurant> distance = new HashMap<Double,Restaurant>();
-        for (int i = 0; i < res.size(); i++){
-            distance.put(res.get(i).getLoc().getCoordinates().get(0),res.get(i));
-            
+        HashMap<Integer, Restaurant> indexer = new HashMap<Integer,Restaurant>();
+        for (int i = 0; i < res.size(); i++) {
+            indexer.put(res.get(i).getRestaurantId(), res.get(i));
         }
+            r = indexer.get(41367417);
+            System.out.println("index key of Pier Side Cafe");
+            System.out.println(r.getName());
+            System.out.println(r.getAddress().getBuilding());
+            System.out.println(r.getAddress().getStreet());
+            System.out.println(r.getAddress().getZipcode());
+            System.out.println(r.getAddress().getCoord());
+            System.out.println(r.getBorough());
+            System.out.println(r.getCuisine());
+
+
 
     }
 }
